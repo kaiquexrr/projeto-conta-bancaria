@@ -6,22 +6,44 @@ class Contabancaria:
         self.saldo = saldo
         print(f'conta {self.numero} criada com sucesso. saldo atual de [green]R${self.saldo:,.2f}[/]')
 
+    def menu(self):
+        while True:
+            print('[1] depositar')
+            print('[2] sacar')
+            print('[3] ver saldo')
+            print('[4] sair ')
+            resposta = int(input())
+            if resposta == 1:
+                depositar = int(input('depositar: '))
+                self.depositar(depositar)
+
+            elif resposta == 2:
+                    saque = int(input('saque: '))
+                    self.sacar(saque)
+            elif resposta == 3:
+                    resposta = (self.saldo)
+                    print(resposta)
+            elif resposta == 4:
+                break
+
+
     def __str__(self):
-       return f'conta {self.numero} de {self.titular} tem  R${self.saldo:,.2f} de saldo'
+        return f'conta {self.numero} de {self.titular} tem  R${self.saldo:,.2f} de saldo'
 
     def  depositar(self,valor):
         self.saldo += valor
-        print(f'deposito de [green]R${self.saldo:,.2f} Autorizado na conta {self.numero}[/]')
+        print(f'deposito de [green]R${valor:,.2f} Autorizado na conta {self.numero}[/]')
 
     def sacar(self,valor):
-        if valor < self.saldo:
-            print(f'Saque negado de [red]R${self.saldo:,.2f} na conta {self.numero}. SALDO INSUFICIENTE[/]')
+        if valor <= self.saldo:
+            self.saldo -= valor
+            print(f'saca [green]R${valor:,.2f} de saldo')
         else:
-            print(f'Saque de [green]R$ {valor:,.2f} autorizado na conta {self.numero}[/] ')
-        self.saldo -= valor
+            print(f'Saque negado de [red]R${self.saldo:,.2f} na conta {self.numero}. SALDO INSUFICIENTE[/]')
+
+
 
 
 c1 = Contabancaria('kaique',3252,650)
-c1.depositar(100)
-c1.sacar(500)
-print(c1)
+c1.menu()
+
