@@ -1,9 +1,48 @@
 from rich import print
+contas = []
+def menu_principal():
+    while True:
+        print('[1] Criar conta')
+        print('[2] Listar conta')
+        print('[3] Acessar conta')
+        print('[4] Sair ')
+        try:
+            resposta = int(input())
+        except ValueError:
+            print('voce digitou texto ao inves de numero')
+            continue
+        if resposta == 1:
+            nome = input('informe o nome do conta: ')
+            numero = input('informe o numero do conta: ')
+            criar_conta = Contabancaria(nome,numero)
+            contas.append(criar_conta)
+        elif resposta == 2:
+            if not contas:
+                print('Nao existe conta cadastrada')
+            else:
+                for conta in contas:
+                    print(conta)
+        elif resposta == 3:
+            pedir_numero = input('informe o numero do conta: ')
+            encontrou = False
+            for conta in contas:
+                if pedir_numero == conta.numero:
+                    encontrou = True
+                    conta.menu()
+                    break
+            if not encontrou:
+                print('Conta nao encontrada')
+        elif resposta == 4:
+            break
+
+
+
 class Contabancaria:
     def __init__(self,titular,numero,saldo=0):
         self.titular = titular
         self.numero = numero
         self.saldo = saldo
+
         print(f'conta {self.numero} criada com sucesso. saldo atual de [green]R${self.saldo:,.2f}[/]')
 
     def menu(self):
@@ -26,7 +65,7 @@ class Contabancaria:
                     print('voce digitou texto ao inves de numero')
                     continue
                 if depositar <= 0:
-                    print(f'valor [red]negativo[/] nao pode ser depositado')
+                    print(f'valor [red]invalido[/] nao pode ser depositado')
                 else:
                     self.depositar(depositar)
 
@@ -37,7 +76,7 @@ class Contabancaria:
                     print('voce digitou texto ao inves de numero')
                     continue
                 if saque <= 0:
-                    print(f'valor [red]negativo[/] nao pode ser sacado')
+                    print(f'valor [red]invalido[/] nao pode ser sacado')
                 else:
                     self.sacar(saque)
             elif resposta == 3:
@@ -45,7 +84,7 @@ class Contabancaria:
             elif resposta == 4:
                 break
             else:
-                print('opcão invalida')
+                print('opção inválida')
                 continue
 
 
@@ -66,6 +105,5 @@ class Contabancaria:
 
 
 
-c1 = Contabancaria('kaique',3252,)
-c1.menu()
+menu_principal()
 
