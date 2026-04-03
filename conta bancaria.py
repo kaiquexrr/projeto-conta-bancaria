@@ -12,19 +12,41 @@ class Contabancaria:
             print('[2] sacar')
             print('[3] ver saldo')
             print('[4] sair ')
-            resposta = int(input())
+
+            try:
+                resposta = int(input())
+            except ValueError:
+                print('voce digitou texto ao inves de numero')
+                continue
+
             if resposta == 1:
-                depositar = int(input('depositar: '))
-                self.depositar(depositar)
+                try:
+                    depositar = int(input('informe o valor do deposito: '))
+                except ValueError:
+                    print('voce digitou texto ao inves de numero')
+                    continue
+                if depositar <= 0:
+                    print(f'valor [red]negativo[/] nao pode ser depositado')
+                else:
+                    self.depositar(depositar)
 
             elif resposta == 2:
+                try:
                     saque = int(input('saque: '))
+                except ValueError:
+                    print('voce digitou texto ao inves de numero')
+                    continue
+                if saque <= 0:
+                    print(f'valor [red]negativo[/] nao pode ser sacado')
+                else:
                     self.sacar(saque)
             elif resposta == 3:
-                    resposta = (self.saldo)
-                    print(resposta)
+                    print(f'saldo: R${self.saldo:,.2f}')
             elif resposta == 4:
                 break
+            else:
+                print('opcão invalida')
+                continue
 
 
     def __str__(self):
@@ -44,6 +66,6 @@ class Contabancaria:
 
 
 
-c1 = Contabancaria('kaique',3252,650)
+c1 = Contabancaria('kaique',3252,)
 c1.menu()
 
