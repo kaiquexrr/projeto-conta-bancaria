@@ -14,8 +14,20 @@ def menu_principal():
         if resposta == 1:
             nome = input('informe o nome do conta: ')
             numero = input('informe o numero do conta: ')
-            criar_conta = Contabancaria(nome,numero)
-            contas.append(criar_conta)
+
+            duplicada = False
+
+            for cnt in contas:
+                if numero == cnt.numero:
+                    duplicada = True
+                    break
+            if duplicada:
+                print('conta duplicada')
+            else:
+                conta = Contabancaria(nome,numero)
+                contas.append(conta)
+
+
         elif resposta == 2:
             if not contas:
                 print('Nao existe conta cadastrada')
@@ -60,7 +72,7 @@ class Contabancaria:
 
             if resposta == 1:
                 try:
-                    depositar = int(input('informe o valor do deposito: '))
+                    depositar = float(input('informe o valor do deposito: '))
                 except ValueError:
                     print('voce digitou texto ao inves de numero')
                     continue
@@ -71,7 +83,7 @@ class Contabancaria:
 
             elif resposta == 2:
                 try:
-                    saque = int(input('saque: '))
+                    saque = float(input('saque: '))
                 except ValueError:
                     print('voce digitou texto ao inves de numero')
                     continue
@@ -98,12 +110,9 @@ class Contabancaria:
     def sacar(self,valor):
         if valor <= self.saldo:
             self.saldo -= valor
-            print(f'saca [green]R${valor:,.2f} de saldo')
+            print(f'Saque de [green]R${valor:,.2f}[/] realizado com sucesso')
         else:
-            print(f'Saque negado de [red]R${self.saldo:,.2f} na conta {self.numero}. SALDO INSUFICIENTE[/]')
-
-
+            print(f'Saque negado de [red]R${valor:,.2f} na conta {self.numero}. SALDO INSUFICIENTE[/]')
 
 
 menu_principal()
-
