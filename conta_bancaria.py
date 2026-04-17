@@ -1,53 +1,5 @@
 from rich import print
 contas = []
-def menu_principal():
-    while True:
-        print('[1] Criar conta')
-        print('[2] Listar conta')
-        print('[3] Acessar conta')
-        print('[4] Sair ')
-        try:
-            resposta = int(input())
-        except ValueError:
-            print('voce digitou texto ao inves de numero')
-            continue
-        if resposta == 1:
-            nome = input('informe o nome do conta: ')
-            numero = input('informe o numero do conta: ')
-
-            duplicada = False
-
-            for cnt in contas:
-                if numero == cnt.numero:
-                    duplicada = True
-                    break
-            if duplicada:
-                print('conta duplicada')
-            else:
-                conta = Contabancaria(nome,numero)
-                contas.append(conta)
-
-
-        elif resposta == 2:
-            if not contas:
-                print('Nao existe conta cadastrada')
-            else:
-                for conta in contas:
-                    print(conta)
-        elif resposta == 3:
-            pedir_numero = input('informe o numero do conta: ')
-            encontrou = False
-            for conta in contas:
-                if pedir_numero == conta.numero:
-                    encontrou = True
-                    conta.menu()
-                    break
-            if not encontrou:
-                print('Conta nao encontrada')
-        elif resposta == 4:
-            break
-
-
 
 class Contabancaria:
     def __init__(self,titular,numero,saldo=0):
@@ -103,7 +55,7 @@ class Contabancaria:
     def __str__(self):
         return f'conta {self.numero} de {self.titular} tem  R${self.saldo:,.2f} de saldo'
 
-    def  depositar(self,valor):
+    def depositar(self,valor):
         self.saldo += valor
         print(f'deposito de [green]R${valor:,.2f} Autorizado na conta {self.numero}[/]')
 
@@ -114,5 +66,54 @@ class Contabancaria:
         else:
             print(f'Saque negado de [red]R${valor:,.2f} na conta {self.numero}. SALDO INSUFICIENTE[/]')
 
+def menu_principal():
+    while True:
+        print('[1] Criar conta')
+        print('[2] Listar conta')
+        print('[3] Acessar conta')
+        print('[4] Sair ')
+        try:
+            resposta = int(input())
+        except ValueError:
+            print('voce digitou texto ao inves de numero')
+            continue
+        if resposta == 1:
+            nome = input('informe o nome da conta: ')
+            numero = input('informe o numero do conta: ')
 
-menu_principal()
+            duplicada = False
+
+            for cnt in contas:
+                if numero == cnt.numero:
+                    duplicada = True
+                    break
+            if duplicada:
+                print('conta duplicada')
+            else:
+                conta = Contabancaria(nome,numero)
+                contas.append(conta)
+
+
+        elif resposta == 2:
+            if not contas:
+                print('Nao existe conta cadastrada')
+            else:
+                for conta in contas:
+                    print(conta)
+        elif resposta == 3:
+            pedir_numero = input('informe o numero do conta: ')
+            encontrou = False
+            for conta in contas:
+                if pedir_numero == conta.numero:
+                    encontrou = True
+                    conta.menu()
+                    break
+            if not encontrou:
+                print('Conta nao encontrada')
+        elif resposta == 4:
+            break
+
+
+if __name__ == '__main__':
+    menu_principal()
+
